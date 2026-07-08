@@ -1,0 +1,32 @@
+title: l3str4nge — notes
+description: >-
+  Just another page that nobody will read except me (sometimes).
+  Notes on things I've learned, written down so I can read back
+  and make sure I actually understand the topic.
+url: "https://l3str4nge.github.io"
+baseurl: ""
+
+# Notes are a collection so the index can be generated automatically.
+collections:
+  notes:
+    output: true
+    permalink: /notes/:path/
+
+# Default front matter so individual notes stay minimal.
+defaults:
+  - scope:
+      path: ""
+      type: notes
+    values:
+      layout: note
+
+# Build settings
+markdown: kramdown
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - docker-compose.yml
+  - .gitignore
+  - drafts

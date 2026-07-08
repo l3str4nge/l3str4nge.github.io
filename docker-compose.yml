@@ -1,0 +1,20 @@
+# Local preview without touching Homebrew or system Ruby.
+# Everything (Ruby + gems) lives inside the container / a named volume.
+#
+#   docker compose up        -> serves http://localhost:4000 with live reload
+#   docker compose run --rm jekyll bundle exec jekyll build   -> one-off build
+#
+services:
+  jekyll:
+    image: ruby:3.3
+    working_dir: /site
+    command: bash -c "bundle install && bundle exec jekyll serve --host 0.0.0.0 --livereload --force_polling"
+    ports:
+      - "4000:4000"     # site
+      - "35729:35729"   # livereload
+    volumes:
+      - .:/site                 # your repo
+      - bundle:/usr/local/bundle # gem cache, survives between runs
+
+volumes:
+  bundle:

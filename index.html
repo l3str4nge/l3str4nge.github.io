@@ -1,39 +1,38 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mój minimalistyczny blog</title>
-    
-    <!-- Ładowanie Sakura CSS z CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
-</head>
-<body>
+---
+layout: default
+---
+<header>
+    <h1>I'm l3str4nge</h1>
+    <p>This is just another page that nobody will read except me (sometimes). It's where I explain things I've learned over time — writing them down so I can read back and make sure I actually understand the topic.</p>
+</header>
 
-    <header>
-        <h1>Welcome!</h1>
-        <p>Piszę o technologii i minimalizmie.</p>
-    </header>
+<main>
+    <h2>Contents</h2>
 
-    <main>
-        <article>
-            <h2>Mój pierwszy wpis</h2>
-            <p>Dzięki <strong>Sakura CSS</strong> moja strona wygląda świetnie bez pisania ani jednej linii własnego kodu CSS.</p>
-            <blockquote>"Prostota jest szczytem wyrafinowania."</blockquote>
-            <p>Oto co planuję:</p>
-            <ul>
-                <li>Regularnie publikować treści.</li>
-                <li>Uczyć się Githa.</li>
-                <li>Pić dobrą kawę.</li>
-            </ul>
-            <a href="#">Czytaj więcej...</a>
-        </article>
-    </main>
+    {% comment %} Only top-level notes (no parent) appear here. {% endcomment %}
+    {% assign top_notes = site.notes | where_exp: "n", "n.parent == nil" | sort: "title" %}
+    <ul>
+        {% for note in top_notes %}
+        <li><a href="{{ note.url | relative_url }}">{{ note.title }}</a></li>
+        {% endfor %}
+    </ul>
 
-    <footer>
-        <hr>
-        <p>© 2026 - Strona stworzona na GitHub Pages</p>
-    </footer>
+    <h2>Newest</h2>
 
-</body>
-</html>
+    {% comment %} Any note with a date, most recent first. {% endcomment %}
+    {% assign recent = site.notes | where_exp: "n", "n.date" | sort: "date" | reverse %}
+    <ul>
+        {% for note in recent limit: 5 %}
+        {% comment %} A child note inherits its category from its parent. {% endcomment %}
+        {% assign category = note.category %}
+        {% if category == nil and note.parent %}
+            {% assign parent_doc = site.notes | where: "note_id", note.parent | first %}
+            {% assign category = parent_doc.category %}
+        {% endif %}
+        <li>
+            <a href="{{ note.url | relative_url }}">{{ note.title }}</a>{% if category %} [{{ category }}]{% endif %}
+            <small>{{ note.date | date: "%Y-%m-%d" }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+</main>

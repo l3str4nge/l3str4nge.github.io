@@ -1,0 +1,41 @@
+---
+layout: default
+---
+{% comment %} Breadcrumb: contents / [parent, if this is a child note] {% endcomment %}
+{% if page.parent %}
+    {% assign parent_doc = site.notes | where: "note_id", page.parent | first %}
+    <p>
+        <a href="{{ '/' | relative_url }}">contents</a>
+        {% if parent_doc %} / <a href="{{ parent_doc.url | relative_url }}">{{ parent_doc.title }}</a>{% endif %}
+    </p>
+{% else %}
+    <p><a href="{{ '/' | relative_url }}">&larr; back to contents</a></p>
+{% endif %}
+
+<article>
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}<p><em>{{ page.summary }}</em></p>{% endif %}
+
+    {{ content }}
+
+    {% comment %} If this note is a parent, list its child notes. {% endcomment %}
+    {% if page.note_id %}
+        {% assign children = site.notes | where: "parent", page.note_id | sort: "title" %}
+        {% if children.size > 0 %}
+        <ul>
+            {% for child in children %}
+            <li>
+                <a href="{{ child.url | relative_url }}">{{ child.title }}</a>
+                {% if child.summary %} — {{ child.summary }}{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endif %}
+</article>
+
+{% if page.parent and parent_doc %}
+<p><a href="{{ parent_doc.url | relative_url }}">&larr; back to {{ parent_doc.title }}</a></p>
+{% else %}
+<p><a href="{{ '/' | relative_url }}">&larr; back to contents</a></p>
+{% endif %}
