@@ -4,7 +4,6 @@ parent: caching
 date: 2026-06-16
 summary: Token lease in cache aside pattern
 ---
-
 ### Introduction
 
 Recently I started to learn and explore system design. I was just wondering how people in big tech, way smarter than me, solve different and specific problems.
@@ -98,4 +97,3 @@ You'll notice something called `STALE` in this snippet — wait, don't we want t
 ### Summary
 
 This is how I learned the cache aside pattern, its bottlenecks, and how to approach them. If you want to see the entire example with simulations, I've created a dedicated repository with a small bookstore application: [cache-aside-with-token-lease](https://github.com/l3str4nge/cache-aside-with-token-lease).
-
